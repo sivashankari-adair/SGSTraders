@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        layout="@layout/app_toolbar_godown_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Saved"
+                    android:textSize="15sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:id = "@+id/suc_entry"
+                    android:visibility="gone"
+                    android:background="@color/green"
+                    />
+                <View
+                    android:id="@+id/dropshadowView"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/toolbar_dropshadow" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_godown_name"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        style="@style/spinner_style"
+                        android:layout_margin="5dp"
+                        android:layout_weight="7"
+                        android:layout_height="35dp" />
+                    <RelativeLayout
+                        android:layout_width="70dp"
+                        android:layout_height="37dp"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:layout_weight="2"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/dod"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            android:background="@drawable/background"
+                            android:imeOptions="actionNext"
+                            android:hint="Date"
+                            android:paddingLeft="15dp"
+                            android:maxLines="1"
+                            android:textSize="15sp"
+                            />
+
+                        <ImageView
+                            android:id="@+id/img_cal"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/bluecal3"
+                            android:layout_marginRight="11dp"
+                            android:layout_marginEnd="11dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignRight="@+id/dod"
+                            android:layout_alignEnd="@+id/dod" />
+
+
+                    </RelativeLayout>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:id="@+id/search"
+                        android:layout_weight="2"
+                        android:hint=" Search..."
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp"
+                        android:drawableRight="@drawable/magnify"
+                        android:background="@drawable/edittext_modified_states"
+                        android:layout_margin="5dp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <ListView
+                        android:id="@+id/poll_list_listView"
+                        android:layout_width="match_parent"
+                        android:foregroundGravity="center"
+                        android:dividerHeight="1dp"
+                        android:divider="@color/colorWhite"
+                        android:layout_height="380dp"
+                        android:background="@color/color_list"
+                        android:layout_weight="5.60">
+                    </ListView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="3"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="3"
+
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:text="Changed Item : "
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            />
+                        <TextView
+                            android:layout_width="35dp"
+                            android:layout_height="25dp"
+                            android:id="@+id/selected_count"
+                            android:gravity="center"
+                            android:text= "0"
+                            android:background="@drawable/background"
+                            android:textColor="@color/colorPrimary"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="3"
+
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:text="Total Item : "
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            />
+                        <TextView
+                            android:layout_width="35dp"
+                            android:layout_height="25dp"
+                            android:gravity="center"
+                            android:id="@+id/not_selected_count"
+                            android:background="@drawable/background"
+                            android:textColor="@color/colorPrimary"
+                            />
+
+                    </LinearLayout>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:id="@+id/submit"
+                        android:text="update"
+                        android:layout_marginLeft="5dp"
+                        android:padding="5sp"
+                        android:layout_weight="5"
+                        android:layout_marginTop="7dp"
+                        android:textAllCaps="false"
+                        android:background="@color/colorPrimary"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </FrameLayout>
+
+</LinearLayout>

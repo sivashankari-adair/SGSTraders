@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#258e8e</color>
+    <color name="colorPrimaryDark">#2eb8b8</color>
+    <color name="colorAccent">#49d0d0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="card_bg">#FDEAEA</color>
+    <color name="bgContentTop">#594691</color>
+    <color name="selected_text_color">#7dffffff</color>
+    <color name="color_list">#d6f5f5</color>
+    <color name="green">#267326</color>
+    <color name="red">#b32400</color>
+    <color name="search_color">#00ffcc</color>
+</resources>

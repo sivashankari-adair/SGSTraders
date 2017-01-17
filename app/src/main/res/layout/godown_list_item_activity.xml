@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/library_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_alignParentLeft="true"
+    android:padding="5dp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        >
+        <TextView
+            android:id="@+id/list_label_qty"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="id"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/list_label_name"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="      name"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textAlignment="textStart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp"
+            android:layout_toLeftOf="@+id/qty_editText"
+            android:layout_toStartOf="@+id/qty_editText" />
+
+
+        <EditText
+            android:id="@+id/qty_editText"
+            android:layout_width="50dp"
+            android:background="@drawable/background"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:maxLines="1"
+            android:text="0"
+            android:imeOptions="actionNext"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="numberDecimal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+        </EditText>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>
