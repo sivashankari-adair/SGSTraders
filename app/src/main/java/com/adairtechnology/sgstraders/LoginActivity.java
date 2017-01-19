@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void args) {
             progress.dismiss();
-            Toast.makeText(LoginActivity.this,server_response,Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(LoginActivity.this,server_response,Toast.LENGTH_SHORT).show();
             if (server_response != null) {
                 try {
                     JSONObject jsonObjj = new JSONObject(server_response);
