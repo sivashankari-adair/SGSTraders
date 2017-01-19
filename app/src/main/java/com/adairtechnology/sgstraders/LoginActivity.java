@@ -168,6 +168,8 @@ public class LoginActivity extends AppCompatActivity {
                                 suc_entry.setVisibility(View.GONE);
                             }
                         }, 3000);
+                        username.setText("");
+                        password.setText("");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
