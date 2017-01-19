@@ -43,6 +43,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -64,6 +69,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     private ListView list;
   //  ItemAdapter adapter;
     ItemAdapterTest adapter;
+    String correctDecoded;
     String url;
     ArrayList<String> dataItems = new ArrayList<String>();
     private Button submit;
@@ -74,7 +80,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     private int month;
     private int day;
     SharedPreferences pref;
-    String input_for_date,value,server_response,selected_date,parameters,
+    String text,input_for_date,value,server_response,update_date,parameters,
             logininfo,godown_id,godown_name_title,af,usercode,str,siz;
     static final int DATE_PICKER_ID = 1111;
     private TextView selected_item,not_selected_item,proceed;
@@ -84,6 +90,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     ArrayList<String> godownname;
     private Spinner godown_name;
     private Typeface type;
+    private static String selected_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,25 +106,6 @@ public class GodownEntryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         tvTitle.setText("  Godown Entry");
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                back();
-            }
-        });
-        proceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!Utils.isNetworkAvailable(getApplicationContext())) {
-                    Toast.makeText(getApplicationContext(),"No Connection Available.",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    new GetItemList().execute();
-
-                }
-            }
-        });
-
         selected_item = (TextView)findViewById(R.id.selected_count);
         not_selected_item = (TextView)findViewById(R.id.not_selected_count);
         suc_entry = (TextView)findViewById(R.id.suc_entry);
@@ -138,7 +126,6 @@ public class GodownEntryActivity extends AppCompatActivity {
                 .append(" "));
 
 
-
         SharedPreferences prefs = getSharedPreferences("MYPREFF", MODE_PRIVATE);
         logininfo = prefs.getString("loginInfo", null);
         try {
@@ -153,7 +140,6 @@ public class GodownEntryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         //spinner load for godown name
         if (!Utils.isNetworkAvailable(this)) {
             Toast.makeText(GodownEntryActivity.this,"No Connection Available.",Toast.LENGTH_SHORT).show();
@@ -161,6 +147,26 @@ public class GodownEntryActivity extends AppCompatActivity {
         else {
             GetSpinnerItem();
         }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back();
+            }
+        });
+
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Utils.isNetworkAvailable(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(),"No Connection Available.",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    new GetItemList().execute();
+
+                }
+            }
+        });
 
         // Button listener to show date picker dialog
         cal.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +189,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
                 pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                 value = pref.getString("Value", "");
-                System.out.println("Value Submit: "+ ""+value);
+                System.out.println("Value Submit for update: "+ ""+value);
 
                 str = value;
                 str = str.replaceAll("\\[", "").replaceAll("\\]","");
@@ -193,15 +199,12 @@ public class GodownEntryActivity extends AppCompatActivity {
                 selected_item.setText(siz);
 
 
-
                 if (!Utils.isNetworkAvailable(GodownEntryActivity.this)) {
                     Toast.makeText(GodownEntryActivity.this,"No Connection Available.",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     new GetUpdateQuantity().execute();
                 }
-
-
             }
         });
     }
@@ -224,9 +227,6 @@ public class GodownEntryActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progress = ProgressDialog.show(GodownEntryActivity.this, "Collecting Godown Name",
-                    "Loading...", true);
-            progress.show();
 
         }
         @Override
@@ -268,7 +268,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void args) {
-            progress.dismiss();
+
             // Spinner adapter
             godown_name
                     .setAdapter(new ArrayAdapter<String>(GodownEntryActivity.this,
@@ -365,7 +365,7 @@ public class GodownEntryActivity extends AppCompatActivity {
             list.setScrollingCacheEnabled(true);
 
             //get serach api
-            new GetSearch().execute();
+            search();
 
             String count = String.valueOf(list.getAdapter().getCount());
             not_selected_item.setText(count);
@@ -398,12 +398,11 @@ public class GodownEntryActivity extends AppCompatActivity {
                     .appendQueryParameter("date",selected_date)
                     .appendQueryParameter("value",value)
                     .appendQueryParameter("usercode",usercode);
-            String myUrl = builder.build().toString();
 
-            System.out.println("testtest"+myUrl);
+            String myUrl = builder.build().toString();
+            System.out.println("Value Submit Url"+myUrl);
             HttpClient httpclient = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(myUrl);
-
             HttpResponse response = null;
             try {
                 response = httpclient.execute(httpget);
@@ -411,7 +410,7 @@ public class GodownEntryActivity extends AppCompatActivity {
                     server_response = EntityUtils.toString(response.getEntity());
                     Log.i("Server response", server_response);
                     Log.i("Server response", myUrl);
-                    System.out.println("server resonse"+server_response);
+                    System.out.println("Value server resonse"+server_response);
 
                 } else {
                     Log.i("Server response", "Failed to get server response");
@@ -455,6 +454,122 @@ public class GodownEntryActivity extends AppCompatActivity {
         }
     }
 
+    //Search code
+    private void search() {
+        // Capture Text in EditText
+        editsearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                if(!af.equals("true"))
+                {
+                    text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
+                    System.out.println("Test text"+text);
+                     new GetSearchItem().execute();
+                     // adapter.filter(text);
+                }
+                else
+                {
+                    Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/Bamini.ttf");
+                    editsearch = (EditText) findViewById(R.id.search);
+                    editsearch.setTypeface(myTypeface);
+                    text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
+                    System.out.println("Test text"+text.toLowerCase(Locale.getDefault()));
+                    // String test = initialize(String.valueOf(editsearch));
+                    // adapter.filter(text);
+                    new GetSearchItem().execute();
+
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+    }
+
+    //get search item list
+    private class GetSearchItem extends AsyncTask<Void, Void, Void> {
+        List<Item> listForSearchConcepts = new ArrayList<Item>();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            input_for_date = date.getText().toString();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+           // http://space7cloud.com/sgs_trader/sgs_datas.php?page=search&godown_id=g001&search_date=17-1-2017&Search_value=//for testing
+            url = EndPoints.search_test + godown_id + "&search_date=" + input_for_date + "&Search_value=" + Uri.encode(text); ;
+            url = url.replaceAll(" ", "%20"); //for removing space
+            try {
+                URL sourceUrl = new URL(url);
+                Log.e("Test url", sourceUrl+"");
+                //
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            // Making a request to url and getting response
+             String jsonStrr = sh.makeServiceCall(url);
+             Log.e("Test url2", url);
+            //Log.e("Response from url:", jsonStrr);
+
+            if (jsonStrr != null) {
+                try {
+                    JSONObject jsonObjj = new JSONObject(jsonStrr);
+
+                    // Getting JSON Array node
+                    JSONArray itemss = jsonObjj.getJSONArray("items");
+
+                    // looping through All Contacts
+                    for (int i = 0; i < itemss.length(); i++) {
+
+                        JSONObject c = itemss.getJSONObject(i);
+
+                        Item item = new Item();
+                        item.setId(c.optString("id"));
+                        item.setQty(c.optString("qty"));
+                        item.setName(c.optString("name"));
+                        item.setItemcode(c.optString("itemcode"));
+                        item.setFont(c.optString("font"));
+                        listForSearchConcepts.add(item);
+                        Log.i("myitemlist",listForSearchConcepts.toString());
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+           // progress.dismiss();
+            adapter = new ItemAdapterTest(GodownEntryActivity.this, (ArrayList<Item>) listForSearchConcepts);
+            list.setAdapter(adapter);
+            list.setScrollingCacheEnabled(true);
+        }
+
+
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -484,71 +599,14 @@ public class GodownEntryActivity extends AppCompatActivity {
                     .append(" "));
 
             selected_date = date.getText().toString();
+
             selected_item.setText("");
-            Log.e("Test url", selected_date+"");
+            System.out.println("Value Date"+selected_date);
+            Log.e("Test url", selected_date+""  );
 
         }
     };
 
-    // Download JSON file AsyncTask(godown name)
-    private class GetSearch extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
 
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            search();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void args) {
-
-        }
-    }
-
-    private void search() {
-        // Capture Text in EditText
-        editsearch.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-
-                if(!af.equals("true"))
-                {
-                    String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-                    adapter.filter(text);
-                }
-                else
-                {
-                    Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/Bamini.ttf");
-                    editsearch = (EditText) findViewById(R.id.search);
-                    editsearch.setTypeface(myTypeface);
-                  // String test = initialize(String.valueOf(editsearch));
-                    adapter.filter(editsearch.toString());
-
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1,
-                                          int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                                      int arg3) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-    }
 }
 

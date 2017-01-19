@@ -198,7 +198,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                                 String ts =String.valueOf((itemlist.get(position).id) +"_"+itemlist.get(position).qty);
                                 value.add(ts);
-                                System.out.println(value);
+                                System.out.println("Value Before" + value);
                                 System.out.println(value.size());
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -206,6 +206,10 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 editor.putString("Value", String.valueOf(value));
                                 editor.clear();
                                 editor.commit();
+
+                                //value.clear();
+                                //System.out.println("Value After" + value);
+                                //System.out.println(value.size());
 
                             }
 
