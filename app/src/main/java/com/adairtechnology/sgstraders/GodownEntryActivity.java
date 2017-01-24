@@ -501,7 +501,7 @@ public class GodownEntryActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
            // http://space7cloud.com/sgs_trader/sgs_datas.php?page=search&godown_id=g001&search_date=17-1-2017&Search_value=//for testing
-            url = EndPoints.search_test + godown_id + "&search_date=" + input_for_date + "&Search_value=" + Uri.encode(text); ;
+            url = EndPoints.search_test + godown_id + "&search_date=" + input_for_date + "&Search_value=" + Uri.encode(text);
             url = url.replaceAll(" ", "%20"); //for removing space
             try {
                 URL sourceUrl = new URL(url);
