@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.adairtechnology.sgstraders.Adapters.ItemAdapter;
 import com.adairtechnology.sgstraders.Adapters.ItemAdapterTest;
 import com.adairtechnology.sgstraders.Models.Godown;
 import com.adairtechnology.sgstraders.Models.Item;
@@ -43,18 +42,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import static com.adairtechnology.sgstraders.Util.TamilFont.initialize;
 
 /**
  * Created by Android-Team1 on 1/4/2017.
@@ -67,9 +61,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     public static TextView tvTitle;
     ImageView image;
     private ListView list;
-  //  ItemAdapter adapter;
     ItemAdapterTest adapter;
-    String correctDecoded;
     String url;
     ArrayList<String> dataItems = new ArrayList<String>();
     private Button submit;
@@ -81,9 +73,9 @@ public class GodownEntryActivity extends AppCompatActivity {
     private int day;
     SharedPreferences pref;
     String text,input_for_date,value,server_response,update_date,parameters,
-            logininfo,godown_id,godown_name_title,af,usercode,str,siz;
+            logininfo,godown_id,godown_name_title,af,usercode,str,siz,count_val,count_before_update;
     static final int DATE_PICKER_ID = 1111;
-    private TextView selected_item,not_selected_item,proceed;
+    private TextView selected_item,not_selected_item,proceed,clear;
     private TextView suc_entry;
     ProgressDialog progress;
     ArrayList<Godown> godnn;
@@ -95,7 +87,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.godown_activity);
+        setContentView(R.layout.godown_entry_activity);
 
         editsearch = (EditText) findViewById(R.id.search);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -186,7 +178,6 @@ public class GodownEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                 value = pref.getString("Value", "");
                 System.out.println("Value Submit for update: "+ ""+value);
@@ -196,7 +187,7 @@ public class GodownEntryActivity extends AppCompatActivity {
                 System.out.println("Value Submit: "+ ""+str);
                 List<String> alist = Arrays.asList(str.split(","));
                 siz = String.valueOf(alist.size());
-                selected_item.setText(siz);
+                // selected_item.setText(siz);
 
 
                 if (!Utils.isNetworkAvailable(GodownEntryActivity.this)) {
@@ -327,6 +318,8 @@ public class GodownEntryActivity extends AppCompatActivity {
             if (jsonStrr != null) {
                 try {
                     JSONObject jsonObjj = new JSONObject(jsonStrr);
+                    count_before_update = jsonObjj.getString("count");
+
 
                     // Getting JSON Array node
                     JSONArray itemss = jsonObjj.getJSONArray("items");
@@ -370,6 +363,9 @@ public class GodownEntryActivity extends AppCompatActivity {
             String count = String.valueOf(list.getAdapter().getCount());
             not_selected_item.setText(count);
 
+            selected_item.setText(count_before_update);
+            System.out.println("Value for qty item"+count_before_update);
+
         }
 
 
@@ -381,10 +377,10 @@ public class GodownEntryActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           progress = ProgressDialog.show(GodownEntryActivity.this, "Saving Item Quantity",
+            progress = ProgressDialog.show(GodownEntryActivity.this, "Saving Item Quantity",
                     "Updating...", true);
             progress.show();
-       }
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -395,12 +391,12 @@ public class GodownEntryActivity extends AppCompatActivity {
                     .appendPath("sgs_trader")
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
-                    .appendQueryParameter("date",selected_date)
-                    .appendQueryParameter("value",value)
-                    .appendQueryParameter("usercode",usercode);
+                    .appendQueryParameter("date", selected_date)
+                    .appendQueryParameter("value", value)
+                    .appendQueryParameter("usercode", usercode);
 
             String myUrl = builder.build().toString();
-            System.out.println("Value Submit Url"+myUrl);
+            System.out.println("Value Submit Url" + myUrl);
             HttpClient httpclient = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(myUrl);
             HttpResponse response = null;
@@ -410,7 +406,7 @@ public class GodownEntryActivity extends AppCompatActivity {
                     server_response = EntityUtils.toString(response.getEntity());
                     Log.i("Server response", server_response);
                     Log.i("Server response", myUrl);
-                    System.out.println("Value server resonse"+server_response);
+                    System.out.println("Value server resonse" + server_response);
 
                 } else {
                     Log.i("Server response", "Failed to get server response");
@@ -428,29 +424,21 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             progress.dismiss();
 
-            Toast.makeText(GodownEntryActivity.this,server_response,Toast.LENGTH_SHORT).show();
-            String s = "updated";
-            if(s.equals(server_response)){
-                suc_entry.setText("New Quantity Added");
-                suc_entry.setVisibility(View.VISIBLE);
-                suc_entry.postDelayed(new Runnable() {
-                    public void run() {
-                        suc_entry.setVisibility(View.GONE);
-                    }
-                }, 3000);
-
-
-            }else{
-                suc_entry.setText("Old Quantity Updated");
-                suc_entry.setVisibility(View.VISIBLE);
-                suc_entry.postDelayed(new Runnable() {
-                    public void run() {
-                        suc_entry.setVisibility(View.GONE);
-                    }
-                }, 3000);
-
+            Toast.makeText(GodownEntryActivity.this, server_response, Toast.LENGTH_SHORT).show();
+            String jsonStrr = server_response;
+            if (jsonStrr != null) {
+                try {
+                    JSONObject jsonObjj = new JSONObject(server_response);
+                    count_val = jsonObjj.getString("count");
+                    String status = jsonObjj.getString("status");
+                    System.out.println("Value Test For count"+count_val);
+                    Toast.makeText(GodownEntryActivity.this, "hi"+count_val, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GodownEntryActivity.this, "hii"+status, Toast.LENGTH_SHORT).show();
+                    selected_item.setText(count_val);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
     }
 
@@ -565,6 +553,8 @@ public class GodownEntryActivity extends AppCompatActivity {
             adapter = new ItemAdapterTest(GodownEntryActivity.this, (ArrayList<Item>) listForSearchConcepts);
             list.setAdapter(adapter);
             list.setScrollingCacheEnabled(true);
+
+
         }
 
 
@@ -606,7 +596,6 @@ public class GodownEntryActivity extends AppCompatActivity {
 
         }
     };
-
 
 }
 

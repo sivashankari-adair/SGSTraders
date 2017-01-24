@@ -34,7 +34,7 @@
             android:gravity="center"
             android:textAlignment="textStart"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
+            android:textSize="17sp"
             android:layout_toLeftOf="@+id/qty_editText"
             android:layout_toStartOf="@+id/qty_editText" />
 
@@ -45,11 +45,12 @@
             android:background="@drawable/background"
             android:layout_height="20dp"
             android:gravity="center"
-            android:textSize="17sp"
+            android:textSize="20sp"
             android:layout_centerVertical="true"
             android:ems="10"
             android:maxLines="1"
             android:text="0"
+            android:maxLength="6"
             android:imeOptions="actionNext"
             android:focusable="true"
             android:focusableInTouchMode="true"

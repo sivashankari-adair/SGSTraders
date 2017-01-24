@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.login_screen_activity);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvTitle = (TextView) findViewById(R.id.tv_title1);
@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         password =(EditText)findViewById(R.id.loginPasswordET);
         login = (Button)findViewById(R.id.loginBtn);
 
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,10 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("uname", uname + "" +upass);
 
                 GetLoginDetails();
-
-
-
-
 
             }
         });
@@ -142,13 +137,11 @@ public class LoginActivity extends AppCompatActivity {
                      String check_status = status;
                     if(check_status.equals("true"))
                     {
-
                         SharedPreferences.Editor edit_pref = getSharedPreferences("MYPREF", MODE_PRIVATE).edit();
                         edit_pref.putString("UserName",uname);
                         edit_pref.putString("Password",upass);
                         edit_pref.commit();
                         edit_pref.clear();
-
 
                         SharedPreferences.Editor prefs = getSharedPreferences("MYPREFF", MODE_PRIVATE).edit();
                         prefs.putString("loginInfo", server_response);

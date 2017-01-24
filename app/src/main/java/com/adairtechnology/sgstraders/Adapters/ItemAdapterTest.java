@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.R;
 import org.json.JSONException;
@@ -26,13 +28,14 @@ import static android.content.Context.MODE_PRIVATE;
 public class ItemAdapterTest extends ArrayAdapter<Item> {
     customButtonListener customListner;
     ArrayList<String> value = new ArrayList<>();
+    ArrayList<String> item_qty_for_all = new ArrayList<>();
     //  public static StringBuilder sb;
     StringBuilder sb;
     private String logininfo;
     public String[] text;
     Context mContext;
     LayoutInflater inflater;
-    List<Item> itemlist ;
+    List<Item> itemlist;
     ArrayList<Item> arraylist;
     ArrayList test;
     Typeface type;
@@ -40,7 +43,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
 
     public ItemAdapterTest(Context context, List<Item> itemlist) {
-        super(context,0);
+        super(context, 0);
         mContext = context;
         this.itemlist = itemlist;
         inflater = LayoutInflater.from(mContext);
@@ -48,6 +51,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
         this.arraylist.addAll(itemlist);
 
     }
+
     @Override
     public int getCount() {
 
@@ -76,19 +80,20 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
     private Context context;
     private ArrayList<String> data = new ArrayList<String>();
-
+   // public static ViewHolder viewHolder;
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         final Item item = getItem(position);
 
+
         View view = null;
         convertView = null;
 
         SharedPreferences prefs = getContext().getSharedPreferences("MYPREFF", MODE_PRIVATE);
         logininfo = prefs.getString("loginInfo", null);
-        System.out.println("godown_entry_activity"+logininfo);
+        System.out.println("godown_entry_activity" + logininfo);
 
         if (logininfo != null) {
             try {
@@ -96,16 +101,16 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                 String item_option = jsonObj.getString("isel");
                 String item_font = jsonObj.getString("af");
 
-                System.out.println("godown_entry_activity"+ "" +item_option + "" +item_font);
+                System.out.println("godown_entry_activity" + "" + item_option + "" + item_font);
 
 
-                if(!item_option.equals("name") && item_font.equals("false")){
+                if (!item_option.equals("name") && item_font.equals("false")) {
                     //--------------------//
-                    System.out.println("godown_entry_activity"+ "print all item code with quantity");
+                    System.out.println("godown_entry_activity" + "print all item code with quantity");
                     //---------------------//
 
                     if (convertView == null) {
-                        convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_iemname_activity, parent, false);
+                        convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_itemname_activity, parent, false);
 
                         viewHolder = new ViewHolder();
                         viewHolder.text = (TextView) convertView
@@ -114,6 +119,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 .findViewById(R.id.qty_editText);
                         viewHolder.text_id = (TextView) convertView
                                 .findViewById(R.id.list_label_qty);
+
                         convertView.setTag(viewHolder);
                     } else {
                         viewHolder = (ViewHolder) convertView.getTag();
@@ -128,8 +134,8 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                     viewHolder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         public void onFocusChange(View v, boolean hasFocus) {
-                            if (!hasFocus){
-                                final int position = (Integer)v.getTag();
+                            if (!hasFocus) {
+                                final int position = (Integer) v.getTag();
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
@@ -137,7 +143,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                                 viewHolder.caption.setTextColor(Color.RED);
 
-                                String ts =String.valueOf((itemlist.get(position).id) +"_"+itemlist.get(position).qty);
+                                String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                 value.add(ts);
                                 System.out.println(value);
                                 System.out.println(value.size());
@@ -148,20 +154,18 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 editor.clear();
                                 editor.commit();
 
-                              //  value.clear();
+                                //  value.clear();
                             }
                         }
 
                     });
-
                     return convertView;
 
 
-                }
-                else if(item_option.equals("name") && item_font.equals("false")){
+                } else if (item_option.equals("name") && item_font.equals("false")) {
 
                     //========================//
-                    System.out.println("godown_entry_activity"+ " , Item name equal to name ");
+                    System.out.println("godown_entry_activity" + " , Item name equal to name ");
                     //========================//
                     if (convertView == null) {
                         convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_item_activity, parent, false);
@@ -187,8 +191,8 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                     viewHolder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         public void onFocusChange(View v, boolean hasFocus) {
-                            if (!hasFocus){
-                                final int position = (Integer)v.getTag();
+                            if (!hasFocus) {
+                                final int position = (Integer) v.getTag();
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
@@ -196,7 +200,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                                 viewHolder.caption.setTextColor(Color.RED);
 
-                                String ts =String.valueOf((itemlist.get(position).id) +"_"+itemlist.get(position).qty);
+                                String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                 value.add(ts);
                                 System.out.println("Value Before" + value);
                                 System.out.println(value.size());
@@ -218,14 +222,15 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                     });
 
+                    item_qty_for_all.add(itemlist.get(position).qty);
+                    System.out.println("Value Check for clear" + item_qty_for_all);
+
                     return convertView;
 
-                }
-
-                else if(item_option.equals("name") && item_font.equals("true")){
+                } else if (item_option.equals("name") && item_font.equals("true")) {
 
                     //========================//
-                    System.out.println("godown_entry_activity"+ "Both true , Item name equal to name and font equal to true then display tamil font");
+                    System.out.println("godown_entry_activity" + "Both true , Item name equal to name and font equal to true then display tamil font");
                     //========================//
                     if (convertView == null) {
                         convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_item_font, parent, false);
@@ -237,6 +242,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 .findViewById(R.id.qty_editText);
                         viewHolder.text_id = (TextView) convertView
                                 .findViewById(R.id.list_label_qty);
+
                         convertView.setTag(viewHolder);
                     } else {
                         viewHolder = (ViewHolder) convertView.getTag();
@@ -251,16 +257,15 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                     viewHolder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         public void onFocusChange(View v, boolean hasFocus) {
-                            if (!hasFocus){
-                                final int position = (Integer)v.getTag();
+                            if (!hasFocus) {
+                                final int position = (Integer) v.getTag();
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
 
-
                                 viewHolder.caption.setTextColor(Color.RED);
 
-                                String ts =String.valueOf((itemlist.get(position).id) +"_"+itemlist.get(position).qty);
+                                String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                 value.add(ts);
                                 System.out.println(value);
                                 System.out.println(value.size());
@@ -270,7 +275,6 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 editor.putString("Value", String.valueOf(value));
                                 editor.clear();
                                 editor.commit();
-
                             }
                         }
 
@@ -292,8 +296,18 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
     public class ViewHolder {
         TextView text;
         EditText caption;
-        TextView text_id;
+        public TextView text_id;
+        Button clear;
     }
+
+   /* public static void clear() {
+        item_qty_for_all.clear();
+
+            viewHolder.text_id.setText("hi");
+
+
+    }*/
+
 
     public void filter(String charText) {
 

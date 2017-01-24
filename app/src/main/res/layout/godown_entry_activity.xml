@@ -12,9 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,12 +65,12 @@
                             android:id="@+id/dod"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
-                            android:gravity="center"
+                            android:gravity="left|center"
                             android:textColor="@color/colorPrimary"
                             android:background="@drawable/background"
                             android:imeOptions="actionNext"
                             android:hint="Date"
-                            android:paddingLeft="15dp"
+                            android:paddingLeft="1dp"
                             android:maxLines="1"
                             android:textSize="15sp"
                             />
@@ -101,16 +98,20 @@
                         android:textSize="15sp"
                         android:drawableRight="@drawable/magnify"
                         android:background="@drawable/edittext_modified_states"
-                        android:layout_margin="5dp"/>
+                        android:layout_margin="5dp">
+                    <requestFocus />
+                    </EditText>
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:orientation="vertical"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:layout_weight="45"
+                    >
 
                     <ListView
                         android:id="@+id/poll_list_listView"
@@ -118,15 +119,17 @@
                         android:foregroundGravity="center"
                         android:dividerHeight="1dp"
                         android:divider="@color/colorWhite"
-                        android:layout_height="380dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
                         android:background="@color/color_list"
-                        android:layout_weight="5.60">
+                        >
                     </ListView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="3"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginRight="10dp"
                     android:orientation="horizontal">
                     <LinearLayout
@@ -142,6 +145,8 @@
                             android:layout_height="50dp"
                             android:text="Changed Item : "
                             android:gravity="center"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
                             />
                         <TextView
@@ -149,7 +154,7 @@
                             android:layout_height="25dp"
                             android:id="@+id/selected_count"
                             android:gravity="center"
-                            android:text= "0"
+                            android:text= ""
                             android:background="@drawable/background"
                             android:textColor="@color/colorPrimary"
                             />
@@ -168,6 +173,8 @@
                             android:layout_height="50dp"
                             android:text="Total Item : "
                             android:gravity="center"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
                             />
                         <TextView
@@ -184,7 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:id="@+id/submit"
-                        android:text="update"
+                        android:text="Update"
                         android:layout_marginLeft="5dp"
                         android:padding="5sp"
                         android:layout_weight="5"
@@ -197,7 +204,6 @@
 
             </LinearLayout>
 
-        </ScrollView>
     </FrameLayout>
 
 </LinearLayout>

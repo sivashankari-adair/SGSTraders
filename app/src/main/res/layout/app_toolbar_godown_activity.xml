@@ -40,16 +40,31 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
-            <TextView
+
+         <!--   <TextView
                 android:layout_width="65dp"
                 android:layout_height="30dp"
-                android:id="@+id/proceed"
+                android:id="@+id/clear"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
                 android:textAlignment="center"
                 android:padding="5dp"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
+                android:background="@drawable/round_corner"
+                android:text="Clear"/>-->
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="30dp"
+                android:id="@+id/proceed"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/round_corner"
                 android:text="Proceed"/>
 

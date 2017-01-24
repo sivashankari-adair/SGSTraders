@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SGSTraders</string>
-    <string name="entry1">GodownStock Entry</string>
+    <string name="entry1">Stock Entry</string>
     <string name="report1">Sales Report</string>
     <string name="entry2">Purchase Entry</string>
     <string name="report2">Vendor Report</string>

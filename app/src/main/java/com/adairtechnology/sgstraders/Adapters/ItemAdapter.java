@@ -20,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -117,7 +116,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                    //---------------------//
 
                     if (convertView == null) {
-                        convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_iemname_activity, parent, false);
+                        convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_itemname_activity, parent, false);
 
                         viewHolder = new ViewHolder();
                         viewHolder.text = (TextView) convertView

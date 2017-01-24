@@ -2,8 +2,8 @@
     android:id="@+id/library_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:layout_alignParentLeft="true"
-    android:padding="5dp" >
+    android:padding="5dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -15,12 +15,12 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="id"
+            android:text="  id"
             android:textColor="@color/colorPrimary"
             android:gravity="left"
             android:padding="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:layout_toLeftOf="@+id/qty_editText"
             android:layout_toStartOf="@+id/qty_editText" />
 
@@ -37,7 +37,7 @@
             android:visibility="invisible"
             android:textAlignment="textStart"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
+            android:textSize="17sp"
             android:layout_toStartOf="@+id/qty_editText"
             android:layout_toLeftOf="@+id/qty_editText" />
 
@@ -48,11 +48,12 @@
             android:background="@drawable/background"
             android:layout_height="20dp"
             android:gravity="center"
-            android:textSize="17sp"
+            android:textSize="20sp"
             android:layout_centerVertical="true"
             android:ems="10"
             android:maxLines="1"
             android:text="0"
+            android:maxLength="6"
             android:imeOptions="actionNext"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -62,8 +63,12 @@
 
         </EditText>
 
-
-
     </RelativeLayout>
+
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/clear1"
+        android:name="SuBMIT"/>-->
 
 </LinearLayout>
