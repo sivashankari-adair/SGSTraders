@@ -43,7 +43,7 @@
             android:id="@+id/qty_editText"
             android:layout_width="50dp"
             android:background="@drawable/background"
-            android:layout_height="21dp"
+            android:layout_height="24dp"
             android:gravity="center"
             android:textSize="18sp"
             android:layout_centerVertical="true"

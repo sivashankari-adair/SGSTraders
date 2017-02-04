@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.R;
@@ -37,9 +38,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private String logininfo;
 
     public String[] text;
-  //  public static HashMap<Integer,String> myList=new HashMap<Integer,String>();
-   // private String[] mDataset;
-
+    public static ArrayList value_count = new ArrayList<>();
 
     Context mContext;
     LayoutInflater inflater;
@@ -280,6 +279,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                             value.add(ts);
                             System.out.println("array list size3"+ value.size());
                             System.out.println("array list size3"+value);
+
+                            value_count.add(ts);
+                            Toast.makeText(mContext,value_count.size(),Toast.LENGTH_SHORT).show();
+                            System.out.println("array list size4"+value);
 
                             SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();

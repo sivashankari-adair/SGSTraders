@@ -12,7 +12,7 @@
 
             <padding android:bottom=".7dp" android:left=".7dp" android:right=".7dp" android:top=".7dp" />
         </shape></item>
-        <item ><bitmap android:gravity="bottom|right" android:src="@drawable/menu_down" />
+        <item android:gravity="bottom|right" android:src="@drawable/menu_down" >
         </item>
     </layer-list></item>
 

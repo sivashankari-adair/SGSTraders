@@ -75,7 +75,8 @@ public class GodownEntryActivity extends AppCompatActivity {
     String text,input_for_date,value,server_response,update_date,parameters,
             logininfo,godown_id,godown_name_title,af,usercode,str,siz,count_val,count_before_update;
     static final int DATE_PICKER_ID = 1111;
-    private TextView selected_item,not_selected_item,proceed,clear;
+    private TextView proceed,clear,not_selected_item;
+    public static TextView selected_item ;
     private TextView suc_entry;
     ProgressDialog progress;
     ArrayList<Godown> godnn;
@@ -146,6 +147,8 @@ public class GodownEntryActivity extends AppCompatActivity {
                 back();
             }
         });
+
+        //Toast.makeText(GodownEntryActivity.this,ItemAdapterTest.value_count.size()+"",Toast.LENGTH_SHORT).show();
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -366,6 +369,7 @@ public class GodownEntryActivity extends AppCompatActivity {
             selected_item.setText(count_before_update);
             System.out.println("Value for qty item"+count_before_update);
 
+            //not_selected_item.setText(ItemAdapterTest.value_count.size()+"");
         }
 
 
@@ -387,8 +391,8 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
-                    .authority("space7cloud.com")
-                    .appendPath("sgs_trader")
+                    .authority("192.168.1.2")//space7cloud.com
+                    .appendPath("sgs_traders")//sgs_trader
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
                     .appendQueryParameter("date", selected_date)

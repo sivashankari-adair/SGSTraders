@@ -100,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
             parameters = EndPoints.login_check + uname + "&password="+ upass;
             String test = parameters;
 
-            System.out.println("testtest"+test);
-            System.out.println("testtest"+parameters);
+            System.out.println("testtest1"+test);
+            System.out.println("testtest2"+parameters);
             HttpClient httpclient = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(parameters);
 
@@ -111,12 +111,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.getStatusLine().getStatusCode() == 200) {
                     server_response = EntityUtils.toString(response.getEntity());
                     Log.i("Server response", server_response);
-                    System.out.println("testtest"+server_response);
+                    System.out.println("testtest3"+server_response);
 
 
                 } else {
                     Log.i("Server response", "Failed to get server response");
-                    System.out.println("testtest"+server_response);
+                    System.out.println("testtest4"+server_response);
                 }
 
             } catch (IOException e) {

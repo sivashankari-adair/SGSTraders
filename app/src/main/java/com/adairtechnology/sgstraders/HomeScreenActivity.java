@@ -2,10 +2,13 @@ package com.adairtechnology.sgstraders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Formatter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +37,11 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setTitle("");
         tvTitle.setText("   Home");
 
-
+     /*   WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+        String ipAddress = Formatter.formatIpAddress(ip);
+        System.out.println("Testip"+ipAddress);*/
 
         img1 = (ImageView) findViewById(R.id.image1);
         img2 = (ImageView) findViewById(R.id.image2);

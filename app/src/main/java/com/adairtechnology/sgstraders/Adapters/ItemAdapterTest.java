@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.adairtechnology.sgstraders.GodownEntryActivity;
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.R;
 import org.json.JSONException;
@@ -29,6 +31,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
     customButtonListener customListner;
     ArrayList<String> value = new ArrayList<>();
     ArrayList<String> item_qty_for_all = new ArrayList<>();
+    ArrayList value_count = new ArrayList<>();
     //  public static StringBuilder sb;
     StringBuilder sb;
     private String logininfo;
@@ -88,8 +91,8 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
         final Item item = getItem(position);
 
 
-        View view = null;
-        convertView = null;
+        /* View view = null;
+        convertView = null;*/
 
         SharedPreferences prefs = getContext().getSharedPreferences("MYPREFF", MODE_PRIVATE);
         logininfo = prefs.getString("loginInfo", null);
@@ -139,14 +142,18 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
+                                if(  itemlist.get(position).qty.equals("")){
+                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
+                                    value.add(ts);
+                                    System.out.println(value);
+                                    System.out.println(value.size());
 
-
-                                viewHolder.caption.setTextColor(Color.RED);
-
-                                String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
-                                value.add(ts);
-                                System.out.println(value);
-                                System.out.println(value.size());
+                                    String tws = String.valueOf(value.size());
+                                    GodownEntryActivity.selected_item.setText(tws);
+                                }
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
@@ -159,6 +166,9 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                         }
 
                     });
+
+                   // viewHolder.caption.setTextColor(Color.RED);
+
                     return convertView;
 
 
@@ -196,14 +206,26 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
-
-
                                 viewHolder.caption.setTextColor(Color.RED);
 
-                                String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
-                                value.add(ts);
-                                System.out.println("Value Before" + value);
-                                System.out.println(value.size());
+
+
+                                if(  itemlist.get(position).qty.equals("")){
+                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
+                                    value.add(ts);
+                                    System.out.println(value);
+                                    System.out.println(value.size());
+
+
+                                    String tws = String.valueOf(value.size());
+                                    GodownEntryActivity.selected_item.setText(tws);
+                                }
+
+
+
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
@@ -260,15 +282,25 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                             if (!hasFocus) {
                                 final int position = (Integer) v.getTag();
                                 final EditText Caption = (EditText) v;
-                                itemlist.get(position).qty = Caption.getText().toString();
-                                System.out.println(arraylist.get(position).qty);
 
-                                viewHolder.caption.setTextColor(Color.RED);
+                                    itemlist.get(position).qty = Caption.getText().toString();
+                                    System.out.println(arraylist.get(position).qty);
+                                    viewHolder.caption.setTextColor(Color.RED);
 
+
+                                if(  itemlist.get(position).qty.equals("")){
+                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
                                 String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                 value.add(ts);
                                 System.out.println(value);
                                 System.out.println(value.size());
+
+                                    String tws = String.valueOf(value_count.size());
+                                    GodownEntryActivity.selected_item.setText(tws);
+                                }
+
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
@@ -299,14 +331,6 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
         public TextView text_id;
         Button clear;
     }
-
-   /* public static void clear() {
-        item_qty_for_all.clear();
-
-            viewHolder.text_id.setText("hi");
-
-
-    }*/
 
 
     public void filter(String charText) {
