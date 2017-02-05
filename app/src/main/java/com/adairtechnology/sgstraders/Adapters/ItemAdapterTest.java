@@ -143,7 +143,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
                                 if(  itemlist.get(position).qty.equals("")){
-                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                    System.out.println("Test");
                                 }
                                 else {
                                     String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
@@ -211,7 +211,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
 
                                 if(  itemlist.get(position).qty.equals("")){
-                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                    System.out.println("test");
                                 }
                                 else {
                                     String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
@@ -219,12 +219,9 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                     System.out.println(value);
                                     System.out.println(value.size());
 
-
                                     String tws = String.valueOf(value.size());
                                     GodownEntryActivity.selected_item.setText(tws);
                                 }
-
-
 
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -289,7 +286,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
 
                                 if(  itemlist.get(position).qty.equals("")){
-                                    Toast.makeText(mContext,"hi",Toast.LENGTH_SHORT).show();
+                                   System.out.println("test");
                                 }
                                 else {
                                 String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);

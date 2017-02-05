@@ -391,7 +391,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
-                    .authority("192.168.1.2")//space7cloud.com
+                    .authority("192.168.1.2")//space7cloud.com//2//92.168.1.100
                     .appendPath("sgs_traders")//sgs_trader
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
@@ -428,7 +428,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             progress.dismiss();
 
-            Toast.makeText(GodownEntryActivity.this, server_response, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(GodownEntryActivity.this, server_response, Toast.LENGTH_SHORT).show();
             String jsonStrr = server_response;
             if (jsonStrr != null) {
                 try {
@@ -436,8 +436,8 @@ public class GodownEntryActivity extends AppCompatActivity {
                     count_val = jsonObjj.getString("count");
                     String status = jsonObjj.getString("status");
                     System.out.println("Value Test For count"+count_val);
-                    Toast.makeText(GodownEntryActivity.this, "hi"+count_val, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(GodownEntryActivity.this, "hii"+status, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(GodownEntryActivity.this, "hi"+count_val, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GodownEntryActivity.this, status, Toast.LENGTH_SHORT).show();
                     selected_item.setText(count_val);
                 } catch (JSONException e) {
                     e.printStackTrace();
