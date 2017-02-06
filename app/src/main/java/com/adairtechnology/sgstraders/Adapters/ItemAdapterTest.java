@@ -30,6 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ItemAdapterTest extends ArrayAdapter<Item> {
     customButtonListener customListner;
     ArrayList<String> value = new ArrayList<>();
+    ArrayList<String> value_changed_item_count = new ArrayList<>();
     ArrayList<String> item_qty_for_all = new ArrayList<>();
     ArrayList value_count = new ArrayList<>();
     //  public static StringBuilder sb;
@@ -143,9 +144,12 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
                                 if(  itemlist.get(position).qty.equals("")){
-                                    System.out.println("Test");
+                                    System.out.println("Dont take that empty space");
                                 }
-                                else {
+                              /*  else if( Caption.getText().toString().equals(itemlist.get(position).qty )){
+                                    System.out.println("Dont take Previously edited value");
+
+                                }*/else {
                                     String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                     value.add(ts);
                                     System.out.println(value);

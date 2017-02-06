@@ -391,7 +391,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
-                    .authority("192.168.1.2")//space7cloud.com//2//92.168.1.100
+                    .authority("192.168.1.1")//space7cloud.com//2//92.168.1.100
                     .appendPath("sgs_traders")//sgs_trader
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
