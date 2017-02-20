@@ -1,7 +1,10 @@
+
 package com.adairtechnology.sgstraders.Adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adairtechnology.sgstraders.DB.Controller;
 import com.adairtechnology.sgstraders.GodownEntryActivity;
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.R;
@@ -44,6 +48,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
     ArrayList test;
     Typeface type;
     final ArrayList<String> list = new ArrayList<String>();
+    Controller controller = new Controller(getContext());
 
 
     public ItemAdapterTest(Context context, List<Item> itemlist) {
@@ -90,7 +95,6 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         final Item item = getItem(position);
-
 
         /* View view = null;
         convertView = null;*/
@@ -300,6 +304,23 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                                     String tws = String.valueOf(value_count.size());
                                     GodownEntryActivity.selected_item.setText(tws);
+
+                                    String code = itemlist.get(position).itemcode;
+                                    String name = itemlist.get(position).name;
+                                    String qty = itemlist.get(position).qty;
+                                    String id = itemlist.get(position).id;
+
+
+                                    controller = new Controller(getContext());
+                                    SQLiteDatabase db = controller.getWritableDatabase();
+                                    ContentValues cv = new ContentValues();
+                                    cv.put("name", name);
+                                    cv.put("quantity", qty);
+                                    cv.put("itemcode", id);
+                                    db.insert("items", null, cv);
+                                    db.close();
+
+                                    System.out.println("test"+cv);
                                 }
 
 
@@ -308,6 +329,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 editor.putString("Value", String.valueOf(value));
                                 editor.clear();
                                 editor.commit();
+
                             }
                         }
 

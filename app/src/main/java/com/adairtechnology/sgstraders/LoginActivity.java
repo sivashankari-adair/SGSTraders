@@ -47,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen_activity);
 
+        //Toast.makeText(LoginActivity.this,MainActivity.final_url,Toast.LENGTH_SHORT).show();
+        //System.out.println("response_code Code in Login" + MainActivity.final_url);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvTitle = (TextView) findViewById(R.id.tv_title1);
         image = (ImageView)findViewById(R.id.img);
@@ -97,7 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             //http://space7cloud.com/sgs_trader/sgs_datas.php?page=login&username=sankari&password=adair
-            parameters = EndPoints.login_check + uname + "&password="+ upass;
+         // parameters = MainActivity.final_url + "?page=login&username=" + uname + "&password="+ upass;
+             parameters = EndPoints.login_check + uname + "&password="+ upass;
             String test = parameters;
 
             System.out.println("testtest1"+test);

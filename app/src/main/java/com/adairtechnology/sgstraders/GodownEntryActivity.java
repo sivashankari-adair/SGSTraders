@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 
 import com.adairtechnology.sgstraders.Adapters.ItemAdapterTest;
+import com.adairtechnology.sgstraders.DB.Controller;
 import com.adairtechnology.sgstraders.Models.Godown;
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.Util.EndPoints;
@@ -84,6 +85,7 @@ public class GodownEntryActivity extends AppCompatActivity {
     private Spinner godown_name;
     private Typeface type;
     private static String selected_date;
+    Controller controller = new Controller(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,12 +195,16 @@ public class GodownEntryActivity extends AppCompatActivity {
                 // selected_item.setText(siz);
 
 
+
                 if (!Utils.isNetworkAvailable(GodownEntryActivity.this)) {
                     Toast.makeText(GodownEntryActivity.this,"No Connection Available.",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     new GetUpdateQuantity().execute();
                 }
+
+                Intent im = new Intent (GodownEntryActivity.this,PlacesList.class);
+                startActivity(im);
             }
         });
     }
@@ -391,7 +397,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
-                    .authority("192.168.1.1")//space7cloud.com//2//92.168.1.100
+                    .authority("192.168.1.7")//space7cloud.com//2//92.168.1.100
                     .appendPath("sgs_traders")//sgs_trader
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
