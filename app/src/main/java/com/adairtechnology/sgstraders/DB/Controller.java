@@ -27,6 +27,7 @@ public class Controller extends SQLiteOpenHelper {
     private static final String databasename = "iteminfo_new"; // Dtabasename
     private static final int versioncode = 1; //versioncode of the database
 
+
     public Controller(Context context) {
         super(context, databasename, null, versioncode);
 
@@ -48,6 +49,11 @@ public class Controller extends SQLiteOpenHelper {
         query = "DROP TABLE IF EXISTS " + tablename;
         database.execSQL(query);
         onCreate(database);
+    }
+
+    public void delete(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ tablename);
     }
 
     /* Method for fetching record from Database (For all items into cardview or grid view using pojo class)*/

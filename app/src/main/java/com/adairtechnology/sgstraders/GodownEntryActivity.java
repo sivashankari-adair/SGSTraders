@@ -73,11 +73,25 @@ public class GodownEntryActivity extends AppCompatActivity {
     private int month;
     private int day;
     SharedPreferences pref;
-    String text,input_for_date,value,server_response,update_date,parameters,
-            logininfo,godown_id,godown_name_title,af,usercode,str,siz,count_val,count_before_update;
+    String text;
+    String input_for_date;
+    String value;
+    String server_response;
+    String update_date;
+    String parameters;
+    String logininfo;
+    static String godown_id;
+    String godown_name_title;
+    String af;
+    static String usercode;
+    String str;
+    String siz;
+    String count_val;
+    String count_before_update;
     static final int DATE_PICKER_ID = 1111;
     private TextView proceed,clear,not_selected_item;
-    public static TextView selected_item ;
+   // public static TextView selected_item ;
+    TextView selected_item ;
     private TextView suc_entry;
     ProgressDialog progress;
     ArrayList<Godown> godnn;
@@ -203,8 +217,7 @@ public class GodownEntryActivity extends AppCompatActivity {
                     new GetUpdateQuantity().execute();
                 }
 
-                Intent im = new Intent (GodownEntryActivity.this,PlacesList.class);
-                startActivity(im);
+
             }
         });
     }
@@ -317,7 +330,7 @@ public class GodownEntryActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
           // http://space7cloud.com/sgs_trader/sgs_datas.php?user_godown_id=g001&date=//for testing
-            url = EndPoints.tdy_wise_update + godown_id + "&date=" + input_for_date;
+            url = SplashTest.ip_host_url + EndPoints.tdy_wise_update + godown_id + "&date=" + input_for_date;
 
             // Making a request to url and getting response
             String jsonStrr = sh.makeServiceCall(url);
@@ -397,7 +410,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
-                    .authority("192.168.1.7")//space7cloud.com//2//92.168.1.100
+                    .authority(SplashTest.ip_for_update)//space7cloud.com//2//92.168.1.100
                     .appendPath("sgs_traders")//sgs_trader
                     .appendPath("sgs_datas.php")
                     .appendQueryParameter("save_godown_id", godown_id)
@@ -465,6 +478,8 @@ public class GodownEntryActivity extends AppCompatActivity {
                     text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
                     System.out.println("Test text"+text);
                      new GetSearchItem().execute();
+
+
                      // adapter.filter(text);
                 }
                 else
@@ -477,6 +492,7 @@ public class GodownEntryActivity extends AppCompatActivity {
                     // String test = initialize(String.valueOf(editsearch));
                     // adapter.filter(text);
                     new GetSearchItem().execute();
+
 
                 }
             }
@@ -496,6 +512,8 @@ public class GodownEntryActivity extends AppCompatActivity {
 
     }
 
+
+
     //get search item list
     private class GetSearchItem extends AsyncTask<Void, Void, Void> {
         List<Item> listForSearchConcepts = new ArrayList<Item>();
@@ -511,7 +529,7 @@ public class GodownEntryActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
            // http://space7cloud.com/sgs_trader/sgs_datas.php?page=search&godown_id=g001&search_date=17-1-2017&Search_value=//for testing
-            url = EndPoints.search_test + godown_id + "&search_date=" + input_for_date + "&Search_value=" + Uri.encode(text);
+            url = SplashTest.ip_host_url +EndPoints.search_test + godown_id + "&search_date=" + input_for_date + "&Search_value=" + Uri.encode(text);
             url = url.replaceAll(" ", "%20"); //for removing space
             try {
                 URL sourceUrl = new URL(url);
@@ -564,10 +582,69 @@ public class GodownEntryActivity extends AppCompatActivity {
             list.setAdapter(adapter);
             list.setScrollingCacheEnabled(true);
 
-
         }
 
 
+    }
+
+    public static String testsearch(String t) {
+        System.out.println("value test search :"+t);
+        new GetUpdateQuantity2().execute(t);
+        return t;
+    }
+
+    //Sending data to server(all new item qty)
+    private static class GetUpdateQuantity2 extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String s = params[0];
+            System.out.println("string"+ s);
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http")
+                    .authority(SplashTest.ip_for_update)//space7cloud.com//2//92.168.1.100
+                    .appendPath("sgs_traders")//sgs_trader
+                    .appendPath("sgs_datas.php")
+                    .appendQueryParameter("save_godown_id", godown_id)
+                    .appendQueryParameter("date", selected_date)
+                    .appendQueryParameter("value", s)
+                    .appendQueryParameter("usercode", usercode);
+
+            String myUrl = builder.build().toString();
+            System.out.println("Value Submit Url" + myUrl);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpget = new HttpGet(myUrl);
+            HttpResponse response = null;
+            try {
+                response = httpclient.execute(httpget);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String server_response = EntityUtils.toString(response.getEntity());
+                    Log.i("Server response", server_response);
+                    Log.i("Server response", myUrl);
+                    System.out.println("Value server resonse" + server_response);
+
+                } else {
+                    Log.i("Server response", "Failed to get server response");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+
+
+        @Override
+        protected void onPostExecute(Void args) {
+        }
     }
 
     @Override
@@ -606,6 +683,7 @@ public class GodownEntryActivity extends AppCompatActivity {
 
         }
     };
+
 
 }
 

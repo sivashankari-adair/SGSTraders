@@ -146,7 +146,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                             sb = new StringBuilder(s.length());
                             sb.append(s);
 
-
                             viewHolder.edit.setTextColor(Color.RED);
                             String ts =String.valueOf(viewHolder.text.getText()) +"_"+sb.toString();
                             value.add(ts);

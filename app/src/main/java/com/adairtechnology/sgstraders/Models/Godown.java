@@ -12,14 +12,14 @@ public class Godown {
     public String getGcode() {
         return gcode;
     }
-   public void setGcode(String gcode) {
+    public void setGcode(String gcode) {
         this.gcode = gcode;
     }
 
-   public String getGodown() {
+    public String getGodown() {
         return godown;
     }
-   public void setGodown(String godown) {
+    public void setGodown(String godown) {
         this.godown = godown;
     }
 

@@ -3,16 +3,19 @@
     package="com.adairtechnology.sgstraders">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".SplashScreen"
+        <activity android:name="com.adairtechnology.sgstraders.SplashTest"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +26,11 @@
 
         <activity android:name=".HomeScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="GodownWithOUtInternetActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            />
 
         <activity android:name=".GodownEntryActivity"
             android:windowSoftInputMode="adjustPan"

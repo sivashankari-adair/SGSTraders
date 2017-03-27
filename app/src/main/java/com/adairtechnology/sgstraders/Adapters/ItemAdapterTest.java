@@ -17,9 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adairtechnology.sgstraders.DB.Controller;
+import com.adairtechnology.sgstraders.DB.ItemController;
 import com.adairtechnology.sgstraders.GodownEntryActivity;
+import com.adairtechnology.sgstraders.GodownWithOUtInternetActivity;
 import com.adairtechnology.sgstraders.Models.Item;
 import com.adairtechnology.sgstraders.R;
+import com.adairtechnology.sgstraders.Util.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -33,8 +37,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ItemAdapterTest extends ArrayAdapter<Item> {
     customButtonListener customListner;
+    public static ArrayList<String> value_idd= new ArrayList<>();
+    public static ArrayList<String> value_qtyd= new ArrayList<>();
+    int count;
+    ArrayList<String> value_qty_test= new ArrayList<>();
     ArrayList<String> value = new ArrayList<>();
-    ArrayList<String> value_changed_item_count = new ArrayList<>();
+    String value_changed_item_count;
     ArrayList<String> item_qty_for_all = new ArrayList<>();
     ArrayList value_count = new ArrayList<>();
     //  public static StringBuilder sb;
@@ -47,8 +55,11 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
     ArrayList<Item> arraylist;
     ArrayList test;
     Typeface type;
-    final ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> list_caption_count = new ArrayList<String>();
     Controller controller = new Controller(getContext());
+    ArrayList<String> value_id= new ArrayList<>();
+    ArrayList<String> value_qty= new ArrayList<>();
+    ArrayList<String> value_item= new ArrayList<>();
 
 
     public ItemAdapterTest(Context context, List<Item> itemlist) {
@@ -128,6 +139,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                         viewHolder.text_id = (TextView) convertView
                                 .findViewById(R.id.list_label_qty);
 
+
                         convertView.setTag(viewHolder);
                     } else {
                         viewHolder = (ViewHolder) convertView.getTag();
@@ -140,6 +152,7 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                     viewHolder.caption.setTag(position);
 
 
+
                     viewHolder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (!hasFocus) {
@@ -147,35 +160,68 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 final EditText Caption = (EditText) v;
                                 itemlist.get(position).qty = Caption.getText().toString();
                                 System.out.println(arraylist.get(position).qty);
+                                viewHolder.caption.setTextColor(Color.RED);
+
                                 if(  itemlist.get(position).qty.equals("")){
                                     System.out.println("Dont take that empty space");
                                 }
-                              /*  else if( Caption.getText().toString().equals(itemlist.get(position).qty )){
-                                    System.out.println("Dont take Previously edited value");
-
-                                }*/else {
+                                else {
                                     String ts = String.valueOf((itemlist.get(position).id) + "_" + itemlist.get(position).qty);
                                     value.add(ts);
                                     System.out.println(value);
                                     System.out.println(value.size());
 
-                                    String tws = String.valueOf(value.size());
-                                    GodownEntryActivity.selected_item.setText(tws);
+                                    String pas_val = (itemlist.get(position).id);
+                                    value_id.add(pas_val);
+                                    ItemController.value_id(String.valueOf(value_id));
+                                    value_idd.add(pas_val);
+
+                                    String pas_qty = itemlist.get(position).qty;
+                                    value_qty.add(pas_qty);
+                                    ItemController.value_qty(String.valueOf(value_qty));
+                                    value_qtyd.add(pas_qty);
+
+
+                                    if (!Utils.isNetworkAvailable(mContext)) {
+
+                                        String tws = String.valueOf(value.size());
+                                       // GodownWithOUtInternetActivity.selected_item.setText(tws+"");
+                                    }
+                                    else {
+                                        String t = value.toString();
+                                        GodownEntryActivity.testsearch(t);
+
+                                      //  String tws = String.valueOf(value.size());
+                                       // GodownEntryActivity.selected_item.setText(tws+"");
+                                    }
+
                                 }
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("Value", String.valueOf(value));
+                                editor.putString("QtyValue", String.valueOf(value_qty));
+                                editor.putString("IdValue", String.valueOf(value_id));
                                 editor.clear();
                                 editor.commit();
 
-                                //  value.clear();
+
                             }
+
+
                         }
 
                     });
+                    item_qty_for_all.add(itemlist.get(position).qty);
+                    System.out.println("Value Check for clear" + item_qty_for_all);
 
-                   // viewHolder.caption.setTextColor(Color.RED);
+                    String test = itemlist.get(position).qty;
+                    System.out.println("all values in edit text :" +test);
+
+                    // viewHolder.caption.setTextColor(Color.RED);
+                    value_idd.clear();
+                    value_qtyd.clear();
+
 
                     return convertView;
 
@@ -195,6 +241,9 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 .findViewById(R.id.qty_editText);
                         viewHolder.text_id = (TextView) convertView
                                 .findViewById(R.id.list_label_qty);
+
+
+
                         convertView.setTag(viewHolder);
                     } else {
                         viewHolder = (ViewHolder) convertView.getTag();
@@ -227,30 +276,59 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                     System.out.println(value);
                                     System.out.println(value.size());
 
-                                    String tws = String.valueOf(value.size());
-                                    GodownEntryActivity.selected_item.setText(tws);
+                                    String pas_val = (itemlist.get(position).id);
+                                    value_id.add(pas_val);
+                                    ItemController.value_id(String.valueOf(value_id));
+                                    value_idd.add(pas_val);
+
+                                    String pas_qty = itemlist.get(position).qty;
+                                    value_qty.add(pas_qty);
+                                    ItemController.value_qty(String.valueOf(value_qty));
+                                    value_qtyd.add(pas_qty);
+
+                                    if (!Utils.isNetworkAvailable(mContext)) {
+
+                                        String tws = String.valueOf(value.size());
+                                       // GodownWithOUtInternetActivity.selected_item.setText(tws+"");
+                                    }
+                                    else {
+                                        String t = value.toString();
+                                        GodownEntryActivity.testsearch(t);
+
+                                     //   String tws = String.valueOf(value.size());
+                                     //   GodownEntryActivity.selected_item.setText(tws+"");
+                                    }
+
+
                                 }
 
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("Value", String.valueOf(value));
+                                editor.putString("QtyValue", String.valueOf(value_qty));
+                                editor.putString("IdValue", String.valueOf(value_id));
                                 editor.clear();
                                 editor.commit();
 
-                                //value.clear();
-                                //System.out.println("Value After" + value);
-                                //System.out.println(value.size());
 
                             }
+
+
 
 
                         }
 
                     });
+                    value_idd.clear();
+                    value_qtyd.clear();
 
                     item_qty_for_all.add(itemlist.get(position).qty);
                     System.out.println("Value Check for clear" + item_qty_for_all);
+
+                    String test = itemlist.get(position).qty;
+                    System.out.println("all values in edit text :" +test);
+
 
                     return convertView;
 
@@ -258,7 +336,6 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
 
                     //========================//
                     System.out.println("godown_entry_activity" + "Both true , Item name equal to name and font equal to true then display tamil font");
-                    //========================//
                     if (convertView == null) {
                         convertView = LayoutInflater.from(mContext).inflate(R.layout.godown_list_item_font, parent, false);
 
@@ -267,8 +344,8 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 .findViewById(R.id.list_label_name);
                         viewHolder.caption = (EditText) convertView
                                 .findViewById(R.id.qty_editText);
-                        viewHolder.text_id = (TextView) convertView
-                                .findViewById(R.id.list_label_qty);
+
+
 
                         convertView.setTag(viewHolder);
                     } else {
@@ -303,37 +380,60 @@ public class ItemAdapterTest extends ArrayAdapter<Item> {
                                 System.out.println(value.size());
 
                                     String tws = String.valueOf(value_count.size());
-                                    GodownEntryActivity.selected_item.setText(tws);
+                                    //GodownEntryActivity.selected_item.setText(tws+"");
 
-                                    String code = itemlist.get(position).itemcode;
-                                    String name = itemlist.get(position).name;
-                                    String qty = itemlist.get(position).qty;
-                                    String id = itemlist.get(position).id;
+                                    String pas_val = (itemlist.get(position).id);
+                                    value_id.add(pas_val);
+                                    ItemController.value_id(String.valueOf(value_id));
+                                    value_idd.add(pas_val);
+
+                                    String pas_qty = itemlist.get(position).qty;
+                                    value_qty.add(pas_qty);
+                                    ItemController.value_qty(String.valueOf(value_qty));
+                                    value_qtyd.add(pas_qty);
+
+                                    if (!Utils.isNetworkAvailable(mContext)) {
+
+                                        String twss = String.valueOf(value.size());
+                                    //    GodownWithOUtInternetActivity.selected_item.setText(twss+"");
+                                    }
+                                    else {
+                                        String t = value.toString();
+                                        GodownEntryActivity.testsearch(t);
+
+                                     //   String twss = String.valueOf(value.size());
+                                      //  GodownEntryActivity.selected_item.setText(twss+"");
+                                    }
 
 
-                                    controller = new Controller(getContext());
-                                    SQLiteDatabase db = controller.getWritableDatabase();
-                                    ContentValues cv = new ContentValues();
-                                    cv.put("name", name);
-                                    cv.put("quantity", qty);
-                                    cv.put("itemcode", id);
-                                    db.insert("items", null, cv);
-                                    db.close();
-
-                                    System.out.println("test"+cv);
                                 }
 
 
                                 SharedPreferences pref = getContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("Value", String.valueOf(value));
+                                editor.putString("QtyValue", String.valueOf(value_qty));
+                                editor.putString("IdValue", String.valueOf(value_id));
                                 editor.clear();
                                 editor.commit();
 
+
                             }
+
                         }
 
+
                     });
+                    item_qty_for_all.add(itemlist.get(position).qty);
+                    System.out.println("Value Check for clear" + item_qty_for_all);
+
+                    String test = itemlist.get(position).qty;
+                    System.out.println("all values in edit text :" +test);
+
+                    value_idd.clear();
+                    value_qtyd.clear();
+
+
 
                     return convertView;
 

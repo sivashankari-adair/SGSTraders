@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adairtechnology.sgstraders.DB.ItemController;
+import com.adairtechnology.sgstraders.Util.Utils;
+
 /**
  * Created by Android-Team1 on 1/5/2017.
  */
@@ -24,6 +27,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     Toolbar toolbar;
     ImageView image;
     public static TextView tvTitle;
+    ItemController controller = new ItemController(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +40,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         tvTitle.setText("   Home");
-
-     /*   WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ip = wifiInfo.getIpAddress();
-        String ipAddress = Formatter.formatIpAddress(ip);
-        System.out.println("Testip"+ipAddress);*/
 
         img1 = (ImageView) findViewById(R.id.image1);
         img2 = (ImageView) findViewById(R.id.image2);
@@ -56,19 +54,34 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         img4.setOnClickListener(this);
         img5.setOnClickListener(this);
         img6.setOnClickListener(this);
+
     }
     public void onClick(View v)
     {
         switch(v.getId())
         {
             case R.id.image1:
-                Intent in=new Intent(HomeScreenActivity.this,GodownEntryActivity.class);
-                startActivity(in);
-                finish();
+
+                if (!Utils.isNetworkAvailable(HomeScreenActivity.this)) {
+                    Toast.makeText(HomeScreenActivity.this,"No Connection Available.",Toast.LENGTH_SHORT).show();
+                    Intent in = new Intent(HomeScreenActivity.this,GodownWithOUtInternetActivity.class);
+                    startActivity(in);
+                    finish();
+                }
+                else {
+                    Intent in = new Intent(HomeScreenActivity.this,GodownEntryActivity.class);
+                    startActivity(in);
+                    finish();
+                }
+
+              /*Intent im = new Intent (GodownEntryActivity.this,PlacesList.class);
+                startActivity(im); */
+
                 break;
 
             case R.id.image2:
-                Toast.makeText(HomeScreenActivity.this,"Under Construction",Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(HomeScreenActivity.this,PlacesList.class);
+                startActivity(in);
                 break;
 
             case R.id.image3:
@@ -84,17 +97,33 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.image6:
-             //   Toast.makeText(HomeScreenActivity.this,"Under Construction",Toast.LENGTH_SHORT).show();
+               //Toast.makeText(HomeScreenActivity.this,"Under Construction",Toast.LENGTH_SHORT).show();
+               /*
+                if (!Utils.isNetworkAvailable(HomeScreenActivity.this)) {
+                    ItemController controller = new ItemController(HomeScreenActivity.this);
+                    controller.delete();
 
+                    SharedPreferences.Editor edit_pref = getSharedPreferences("MYPREF", MODE_PRIVATE).edit();
+                    edit_pref.clear();
+                    edit_pref.commit();
+                    restartActivity();
+                }
+                else {
+
+                    SharedPreferences.Editor edit_pref = getSharedPreferences("MYPREF", MODE_PRIVATE).edit();
+                    edit_pref.clear();
+                    edit_pref.commit();
+                    restartActivity();
+                }*/
+
+                controller.delete();
                 SharedPreferences.Editor edit_pref = getSharedPreferences("MYPREF", MODE_PRIVATE).edit();
                 edit_pref.clear();
                 edit_pref.commit();
-
                 restartActivity();
                 break;
 
         }
-
 
     }
 
@@ -102,7 +131,5 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         finish();
         Intent in = new Intent(HomeScreenActivity.this,LoginActivity.class);
         startActivity(in);
-
-
     }
 }
