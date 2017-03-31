@@ -82,7 +82,7 @@ public class SplashTest extends AppCompatActivity {
                     try {
                     IpController controller = new IpController(SplashTest.this);
                     ip_from_db = controller.getlastvalue();
-                    String ip = "http://192.168.0." + ip_from_db + "/sgs_traders/sgs_datas.php?";
+                    String ip = "http://192.168.1." + ip_from_db + "/sgs_traders/sgs_datas.php?";
                     System.out.println("test " + ip);
                     if (!ip_from_db.equals("")) {
                         System.out.println("dp value is not empty");
@@ -109,7 +109,7 @@ public class SplashTest extends AppCompatActivity {
         label1:
         for (int i=1;i<=255;i++ ) {
 
-            String customURL = "http://192.168.0." + i + "/sgs_traders/sgs_datas.php";
+            String customURL = "http://192.168.1." + i + "/sgs_traders/sgs_datas.php";
             System.out.println("customURL" + customURL);
 
             try {
@@ -153,8 +153,8 @@ public class SplashTest extends AppCompatActivity {
 
         String ip_from_db = controller.getlastvalue();
         System.out.println("value from database : " +ip_from_db);
-        ip_for_update="192.168.0."+ip_from_db;
-        String ip = "http://192.168.0." + ip_from_db + "/sgs_traders/sgs_datas.php?";
+        ip_for_update="192.168.1."+ip_from_db;
+        String ip = "http://192.168.1." + ip_from_db + "/sgs_traders/sgs_datas.php?";
         System.out.println("test " +ip);
 
         ip_host_url = ip;
@@ -217,7 +217,7 @@ public class SplashTest extends AppCompatActivity {
                 ip_host_url = new_value;
                 System.out.println("test end point :: " +
                         ip_host_url);
-                ip_for_update = "192.168.0."+ip_from_db;
+                ip_for_update = "192.168.1."+ip_from_db;
                GoToMainPage();
             }
             else

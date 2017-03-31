@@ -229,7 +229,7 @@ public class PlacesList extends ActionBarActivity {
         else {
 
             ip_from_db = contr.getlastvalue();
-            String ip = "http://192.168.0." + ip_from_db + "/sgs_traders/sgs_datas.php?";
+            String ip = "http://192.168.1." + ip_from_db + "/sgs_traders/sgs_datas.php?";
             System.out.println("test " + ip);
             if (!ip_from_db.equals("")) {
                 System.out.println("dp value is not empty");
@@ -306,7 +306,7 @@ public class PlacesList extends ActionBarActivity {
         label1:
         for (int i=1;i<=255;i++ ) {
 
-            String customURL = "http://192.168.0." + i + "/sgs_traders/sgs_datas.php";
+            String customURL = "http://192.168.1." + i + "/sgs_traders/sgs_datas.php";
             System.out.println("customURL" + customURL);
 
             try {
@@ -364,7 +364,7 @@ public class PlacesList extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            String ip_forupdate = "192.168.0."+ip_from_db;
+            String ip_forupdate = "192.168.1."+ip_from_db;
             System.out.println("fhjf : "+ip_forupdate);
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
@@ -438,7 +438,7 @@ public class PlacesList extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            String ip_forupdate = "192.168.0."+ip_from_db_new;
+            String ip_forupdate = "192.168.1."+ip_from_db_new;
             System.out.println("fhjf : "+ip_forupdate);
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
